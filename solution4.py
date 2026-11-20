@@ -1,14 +1,10 @@
-# Stacked chart of matches played by team by season
-# Plot a stacked bar chart of ...
-#
-# number of games played
-# by team
-# by season
+"""Stacked chart of matches played by team by season"""
 
-from match_file_reader import data_matches
 import matplotlib.pyplot as plt
+from match_file_reader import data_matches
 
 def calculate(matches):
+    """Calculating the matches played by team by season"""
     result = {}
     for match in matches():
         year = int(match["season"])
@@ -21,11 +17,14 @@ def calculate(matches):
             else:
                 result[year] = {match[team]: 1}
 
-    matches_team_season = {year: dict(sorted(team.items())) for year, team in sorted(result.items())}
+    matches_team_season = {
+        year: dict(sorted(team.items())) for year, team in sorted(result.items())
+    }
 
     return matches_team_season
 
 def plot(match):
+    """Plotting the result in the stacked bar chart"""
     years = match.keys()
     teams = sorted({team for season_data in match.values() for team in season_data})
     bottom_heights = [0] * len(years)
@@ -44,6 +43,7 @@ def plot(match):
     plt.show()
 
 def execute(match):
+    """Executing the calculation and plotting in stacked bar chart"""
     matches = calculate(match)
     plot(matches)
 

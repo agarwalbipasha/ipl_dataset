@@ -1,10 +1,12 @@
-# Top 10 economical bowlers in the year 2015
+"""Top 10 economical bowlers in the year 2015"""
 
+import matplotlib.pyplot as plt
 from match_file_reader import data_matches
 from delivery_file_reader import data_delivery
-import matplotlib.pyplot as plt
+
 
 def calculate(deliveries, matches):
+    """Calculating top 10 economical bowlers in 2015"""
     economical_result = {}
     result = {}
     id_2015 = set()
@@ -15,10 +17,7 @@ def calculate(deliveries, matches):
     for delivery in deliveries():
         if delivery["match_id"] in id_2015:
             bowler = delivery["bowler"]
-            total_runs = int(delivery["total_runs"])
-            bye_runs = int(delivery["bye_runs"])
-            legbye_runs = int(delivery["legbye_runs"])
-            runs_conceeded = total_runs - bye_runs - legbye_runs
+            runs_conceeded = int(delivery["total_runs"]) - int(delivery["bye_runs"]) - int(delivery["legbye_runs"])
             if bowler in result:
                 result[bowler]["runs"] += runs_conceeded
                 result[bowler]["balls"] += 1
@@ -29,13 +28,15 @@ def calculate(deliveries, matches):
         economical_rate = round(values['runs'] * 6 / values['balls'], 2)
         economical_result[key] = economical_rate
 
-    sorted_economical_result = dict(sorted(economical_result.items(), key=lambda item: item[1])[:10])
+    sorted_economical_result = dict(
+        sorted(economical_result.items(), key=lambda item: item[1])[:10]
+    )
     economical_bowlers = sorted_economical_result.keys()
     economy_rate_bowler = sorted_economical_result.values()
-
     return economical_bowlers, economy_rate_bowler
 
 def plot(name, rate):
+    """Plotting the result in the bar chart"""
     plt.figure(figsize=(12,7))
     plt.title("Top 10 economical bowlers in the year 2015", fontsize=14, fontweight="bold")
     plt.bar(name, rate, color="green", edgecolor="black")
@@ -47,6 +48,7 @@ def plot(name, rate):
     plt.show()
 
 def execute(delivery, match):
+    """Executing the calculation and plotting of data in bar chart"""
     bowler, economy_rate = calculate(delivery, match)
     plot(bowler, economy_rate)
 

@@ -1,9 +1,11 @@
-# Number of matches won per team per year in IPL.
+"""Number of matches won per team per year in IPL"""
 
-from match_file_reader import data_matches
 import matplotlib.pyplot as plt
+from match_file_reader import data_matches
+
 
 def calculate(matches):
+    """Calculating the number of matches won per team per year"""
     result = {}
     for match in matches():
         year = int(match["season"])
@@ -20,6 +22,7 @@ def calculate(matches):
     return sorted_result
 
 def plot(match):
+    """Plotting the result in the stacked bar chart"""
     years = match.keys()
     teams = sorted({team for season_data in match.values() for team in season_data})
     bottom_heights = [0] * len(years)
@@ -28,7 +31,9 @@ def plot(match):
         team_wins = [match[year].get(team, 0) for year in years]
         plt.bar(years, team_wins, bottom = bottom_heights, label=team)
         bottom_heights = [current + added for current, added in zip(bottom_heights, team_wins)]
-    plt.title("Stacked chart of number of matches won per team per year", fontsize=14, fontweight="bold")
+    plt.title("Stacked chart of number of matches won per team per year",
+        fontsize=14,
+        fontweight="bold")
     plt.xlabel("Year", fontsize=12)
     plt.ylabel("Number of matches", fontsize=12)
     plt.legend(title="Teams", bbox_to_anchor=(1.02, 1), loc="upper left")
@@ -38,6 +43,7 @@ def plot(match):
     plt.show()
 
 def execute(match):
+    """Executing the calculation and plotting of data in stacked bar chart"""
     matches = calculate(match)
     plot(matches)
 

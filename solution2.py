@@ -1,13 +1,11 @@
-# Top batsman for Royal Challengers Bangalore
-# Consider only games played by Royal Challengers Bangalore. Now plot the total runs scored by top 10 batsman playing for Royal Challengers Bangalore over the history of IPL.
-#
-# Plot only top 10 batsmen by runs scored in RCB.
+"""Top batsman for Royal Challengers Bangalore.Plot only top 10 batsmen by runs scored"""
 
 import matplotlib.pyplot as plt
 
 from delivery_file_reader import data_delivery
 
 def calculate(data):
+    """Calculating the runs scored by batsman of RCB"""
     result = {}
     for record in data():
         team = record["batting_team"]
@@ -24,6 +22,7 @@ def calculate(data):
     return top_batsman, runs_batsman
 
 def plot(name, run):
+    """Plotting the result in the bar chart"""
     plt.figure(figsize=(12,7))
     plt.title("Top batsman for Royal Challengers Bangalore", fontsize=14, fontweight="bold")
     plt.bar(name, run, color="steelblue", edgecolor="black")
@@ -35,6 +34,7 @@ def plot(name, run):
     plt.show()
 
 def execute(record):
+    """Executing the calculation and plotting of data in bar chart"""
     name, run = calculate(record)
     plot(name, run)
 

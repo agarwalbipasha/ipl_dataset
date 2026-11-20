@@ -1,9 +1,11 @@
-# Number of matches played per year for all the years in IPL.
+"""Number of matches played per year for all the years in IPL"""
 
-from match_file_reader import data_matches
 import matplotlib.pyplot as plt
+from match_file_reader import data_matches
+
 
 def calculate(records):
+    """Calculating the number of matches played per year"""
     result = {}
     for match in records():
         year = match["season"]
@@ -17,6 +19,7 @@ def calculate(records):
     return years, count
 
 def plot(year, counts):
+    """Plotting the result in the bar chart"""
     plt.figure(figsize=(12,7))
     plt.title("Number of matches played per year", fontsize=14, fontweight="bold")
     plt.bar(year, counts, color="steelblue", edgecolor="black")
@@ -29,6 +32,7 @@ def plot(year, counts):
 
 
 def execute(match):
+    """Executing the calculation and plotting of data in bar chart"""
     year, count = calculate(match)
     plot(year, count)
 

@@ -1,13 +1,13 @@
-# Foreign umpire analysis
-# Obtain a source for country of origin of umpires. Plot a chart of number of umpires by in IPL by country. Indian umpires should be ignored as this would dominate the graph.
-#
+"""Foreign umpire analysis"""
 
+import matplotlib.pyplot as plt
 from umpire_file_reader import data_umpires
 from match_file_reader import data_matches
 
-import matplotlib.pyplot as plt
+
 
 def calculate(data, umpires):
+    """Finding the count of foreign umpires country wise"""
     result = {}
     umpire_list = set()
     for match in data():
@@ -27,6 +27,7 @@ def calculate(data, umpires):
     return country_names, country_count
 
 def plot(countries, count):
+    """Plotting the result in the bar chart"""
     plt.figure(figsize=(12,7))
     plt.title("Foreign umpire analysis", fontsize=14, fontweight="bold")
     plt.bar(countries, count, color="steelblue", edgecolor="black")
@@ -39,6 +40,7 @@ def plot(countries, count):
 
 
 def execute(record, umpire):
+    """Executing the calculation and plotting of data in bar chart"""
     country, count = calculate(record, umpire)
     plot(country, count)
 

@@ -1,10 +1,12 @@
-# Extra runs conceded per team in the year 2016
+"""Extra runs conceded per team in the year 2016"""
 
+import matplotlib.pyplot as plt
 from match_file_reader import data_matches
 from delivery_file_reader import data_delivery
-import matplotlib.pyplot as plt
+
 
 def calculate(deliveries, matches):
+    """Calculating extra runs conceded per team in 2016"""
     result = {}
     id_2016 = set()
     for match in matches():
@@ -24,6 +26,7 @@ def calculate(deliveries, matches):
     return team_names, extra_runs
 
 def plot(name, runs):
+    """Plotting the result in the bar chart"""
     plt.figure(figsize=(12,7))
     plt.title("Extra runs conceded per team in the year 2016", fontsize=14, fontweight="bold")
     plt.bar(name, runs, color="steelblue", edgecolor="black")
@@ -35,6 +38,7 @@ def plot(name, runs):
     plt.show()
 
 def execute(delivery, match):
+    """Executing the calculation and plotting of data in bar chart"""
     teams, run = calculate(delivery, match)
     plot(teams, run)
 
