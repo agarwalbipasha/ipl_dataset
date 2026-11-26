@@ -1,8 +1,8 @@
 """Plot a chart of the total runs scored by each teams over the history of IPL."""
 
 import matplotlib.pyplot as plt
-from delivery_file_reader import data_delivery
 
+from delivery_file_reader import data_delivery
 
 
 def calculate(data):
@@ -18,11 +18,13 @@ def calculate(data):
 
     team_names = result.keys()
     total_runs = result.values()
-    return team_names, total_runs
+    # print(team_names, total_runs)
+    return list(team_names), list(total_runs)
+
 
 def plot(name, run):
     """Plotting the result in the bar chart"""
-    plt.figure(figsize=(12,7))
+    plt.figure(figsize=(12, 7))
     plt.title("Total runs scored by team", fontsize=14, fontweight="bold")
     plt.bar(name, run, color="steelblue", edgecolor="black")
     plt.xlabel("Team name", fontsize=12)
@@ -32,9 +34,12 @@ def plot(name, run):
     plt.savefig("output/solution1.png", dpi=300)
     plt.show()
 
+
 def execute(records):
     """Executing the calculation and plotting of data in bar chart"""
     team, runs = calculate(records)
     plot(team, runs)
 
-execute(data_delivery)
+
+if __name__ == "__main__":
+    execute(data_delivery)

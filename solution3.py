@@ -1,9 +1,9 @@
 """Foreign umpire analysis"""
 
 import matplotlib.pyplot as plt
-from umpire_file_reader import data_umpires
-from match_file_reader import data_matches
 
+from match_file_reader import data_matches
+from umpire_file_reader import data_umpires
 
 
 def calculate(data, umpires):
@@ -26,9 +26,10 @@ def calculate(data, umpires):
     country_count = result.values()
     return country_names, country_count
 
+
 def plot(countries, count):
     """Plotting the result in the bar chart"""
-    plt.figure(figsize=(12,7))
+    plt.figure(figsize=(12, 7))
     plt.title("Foreign umpire analysis", fontsize=14, fontweight="bold")
     plt.bar(countries, count, color="steelblue", edgecolor="black")
     plt.xlabel("Country name", fontsize=12)
@@ -45,4 +46,5 @@ def execute(record, umpire):
     plot(country, count)
 
 
-execute(data_matches, data_umpires)
+if __name__ == "__main__":
+    execute(data_matches, data_umpires)

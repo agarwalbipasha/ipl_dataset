@@ -1,8 +1,9 @@
 """Top 10 economical bowlers in the year 2015"""
 
 import matplotlib.pyplot as plt
-from match_file_reader import data_matches
+
 from delivery_file_reader import data_delivery
+from match_file_reader import data_matches
 
 
 def calculate(deliveries, matches):
@@ -17,7 +18,11 @@ def calculate(deliveries, matches):
     for delivery in deliveries():
         if delivery["match_id"] in id_2015:
             bowler = delivery["bowler"]
-            runs_conceeded = int(delivery["total_runs"]) - int(delivery["bye_runs"]) - int(delivery["legbye_runs"])
+            runs_conceeded = (
+                int(delivery["total_runs"])
+                - int(delivery["bye_runs"])
+                - int(delivery["legbye_runs"])
+            )
             if bowler in result:
                 result[bowler]["runs"] += runs_conceeded
                 result[bowler]["balls"] += 1
@@ -25,7 +30,7 @@ def calculate(deliveries, matches):
                 result[bowler] = {"runs": runs_conceeded, "balls": 1}
 
     for key, values in result.items():
-        economical_rate = round(values['runs'] * 6 / values['balls'], 2)
+        economical_rate = round(values["runs"] * 6 / values["balls"], 2)
         economical_result[key] = economical_rate
 
     sorted_economical_result = dict(
@@ -33,12 +38,15 @@ def calculate(deliveries, matches):
     )
     economical_bowlers = sorted_economical_result.keys()
     economy_rate_bowler = sorted_economical_result.values()
-    return economical_bowlers, economy_rate_bowler
+    return list(economical_bowlers), list(economy_rate_bowler)
+
 
 def plot(name, rate):
     """Plotting the result in the bar chart"""
-    plt.figure(figsize=(12,7))
-    plt.title("Top 10 economical bowlers in the year 2015", fontsize=14, fontweight="bold")
+    plt.figure(figsize=(12, 7))
+    plt.title(
+        "Top 10 economical bowlers in the year 2015", fontsize=14, fontweight="bold"
+    )
     plt.bar(name, rate, color="green", edgecolor="black")
     plt.xlabel("Bowler name", fontsize=12)
     plt.ylabel("Economy rate", fontsize=12)
@@ -47,9 +55,12 @@ def plot(name, rate):
     plt.savefig("output/solution8.png", dpi=300)
     plt.show()
 
+
 def execute(delivery, match):
     """Executing the calculation and plotting of data in bar chart"""
     bowler, economy_rate = calculate(delivery, match)
     plot(bowler, economy_rate)
 
-execute(data_delivery, data_matches)
+
+if __name__ == "__main__":
+    execute(data_delivery, data_matches)

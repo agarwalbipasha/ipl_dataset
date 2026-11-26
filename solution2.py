@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from delivery_file_reader import data_delivery
 
+
 def calculate(data):
     """Calculating the runs scored by batsman of RCB"""
     result = {}
@@ -16,15 +17,20 @@ def calculate(data):
                 result[batsman] = runs
             else:
                 result[batsman] += runs
-    result_topten = dict(sorted(result.items(), key=lambda item: item[1], reverse=True)[:10])
+    result_topten = dict(
+        sorted(result.items(), key=lambda item: item[1], reverse=True)[:10]
+    )
     top_batsman = result_topten.keys()
     runs_batsman = result_topten.values()
-    return top_batsman, runs_batsman
+    return list(top_batsman), list(runs_batsman)
+
 
 def plot(name, run):
     """Plotting the result in the bar chart"""
-    plt.figure(figsize=(12,7))
-    plt.title("Top batsman for Royal Challengers Bangalore", fontsize=14, fontweight="bold")
+    plt.figure(figsize=(12, 7))
+    plt.title(
+        "Top batsman for Royal Challengers Bangalore", fontsize=14, fontweight="bold"
+    )
     plt.bar(name, run, color="steelblue", edgecolor="black")
     plt.xlabel("Batsman name", fontsize=12)
     plt.ylabel("Total runs", fontsize=12)
@@ -33,10 +39,12 @@ def plot(name, run):
     plt.savefig("output/solution2.png", dpi=300)
     plt.show()
 
+
 def execute(record):
     """Executing the calculation and plotting of data in bar chart"""
     name, run = calculate(record)
     plot(name, run)
 
 
-execute(data_delivery)
+if __name__ == "__main__":
+    execute(data_delivery)
